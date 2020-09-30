@@ -26,9 +26,11 @@
     <?php
     if (isset($_POST['name'])) {
       $total = $_POST['sub1'] + $_POST['sub2'] + $_POST['sub3'] + $_POST['sub4'] + $_POST['sub5'];
-      echo "<br><h5>Total Marks Obtained</h5>";
-      echo "Total Marks: " . $total;
+      echo "<h3>";
+      echo "<br>Total Marks: $total";
+      echo "<br>Total marks: 500";
       echo "<br>Percentage: " . $total / 5;
+      echo "</h3>";
     }
     ?>
   </form>
