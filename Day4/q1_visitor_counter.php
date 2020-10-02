@@ -1,68 +1,17 @@
 <?php
 include('connect.php');
+$stmt = ("SELECT `visitor count` FROM `counter`");
+$result = $connect->query($stmt);
+$row = $result->fetch_assoc();
 
-$visitors = file_get_contents("count.txt");
-$new_visitors = $visitors + 1;
-$file = fopen("count.txt", "w");
-fwrite($file, $new_visitors);
+echo "<h1>Visitor Count</h1>";
+echo "<br><h2>" . $row['visitor count'] . " visitors!</h2>";
 
-echo "
-  <div>
-    <h3>Visitor Count</h3>
-    <h3>$visitors visitors!</h3>
-  </div>
-";
+$new = $row['visitor count'] + 1;
 
-?>
+$stmt = $connect->prepare("UPDATE `counter` SET `visitor count`=?");
+$stmt->bind_param("i", $new);
 
-<html>
-
-<body>
-  <form action="q1_visitor_counter.php" method="POST">
-    <label>Name of Student*: </label>
-    <input type="text" name="name" required />
-    <h4>Marks in Each Subject</h4>
-
-    <label>Subject 1*: </label>
-    <input type="number" name="sub1" required />
-    <br>
-    <label>Subject 2*: </label>
-    <input type="number" name="sub2" required />
-    <br>
-    <label>Subject 3*: </label>
-    <input type="number" name="sub3" required />
-    <br>
-    <label>Subject 4*: </label>
-    <input type="number" name="sub4" required />
-    <br>
-    <label>Subject 5*: </label>
-    <input type="number" name="sub5" required />
-
-    <br>
-    <button type="submit">Submit</button>
-
-    <?php
-    if (isset($_POST['name'])) {
-      $total = $_POST['sub1'] + $_POST['sub2'] + $_POST['sub3'] + $_POST['sub4'] + $_POST['sub5'];
-      echo "<h3>";
-      echo "<br>Total Marks: $total";
-      $total_marks = 500;
-      echo "<br>Total marks: 500";
-      $percent = $total / 5;
-      echo "<br>Percentage: " . $percent;
-      echo "</h3>";
-
-      //Add to database
-      $stmt = $connect->prepare("INSERT INTO class1(`name`,sub1,sub2,sub3,sub4,sub5,`total obtained`,`total marks`,`percent`) VALUES (?,?,?,?,?,?,?,?,?)");
-      $stmt->bind_param("siiiiiiid", $_POST['name'], $_POST['sub1'], $_POST['sub2'], $_POST['sub3'], $_POST['sub4'], $_POST['sub5'], $total, $total_marks, $percent);
-      if ($stmt->execute()) {
-        echo "<br>Record added successfully";
-      } else {
-        echo "<br>Record not added. Please try again.";
-      }
-    }
-    ?>
-  </form>
-</body>
-
-</html>
+if (!$stmt->execute()) {
+  echo "Unable to update count";
+}
