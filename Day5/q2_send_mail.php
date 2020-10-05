@@ -17,12 +17,14 @@ if (isset($_POST['feedback'])) {
 
     $subject = "Thank you for your feedback!";
     $body = "Thank you, $name!";
-    mail($to, $subject, $body);
+    $header = "From: abc@gmail.com";
+    mail($to, $subject, $body, $header);
 
     $to = "admin@admin.com";
     $subject = "Feedback from $name";
     $body = "Received new feedback from $name, with email address $email. The feedback given is: $feedback";
-    mail($to, $subject, $body);
+    $header = "From: abc@gmail.com";
+    mail($to, $subject, $body, $header);
 }
 ?>
 
