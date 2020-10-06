@@ -39,24 +39,7 @@ if ($php == NULL || $mysql == NULL || $html == NULL) {
 
 <head>
     <title>Student Dashboard</title>
-    <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 50%;
-        }
-
-        td,
-        th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -66,7 +49,6 @@ if ($php == NULL || $mysql == NULL || $html == NULL) {
     <form action="student-dashboard.php" method="POST">
         <input type="submit" name="logout" value="Logout" />
     </form>
-    <!-- logout -->
     <h3>Your marks:</h3>
     <table>
         <tr>
@@ -96,8 +78,15 @@ if ($php == NULL || $mysql == NULL || $html == NULL) {
     </table>
     <h2><?php
         if ($c) {
-            echo "Congratulations! You have scored more than 60%!";
-            // mail option
+            $_SESSION['name'] = $row['name'];
+            $_SESSION['php'] = $php;
+            $_SESSION['mysql'] = $mysql;
+            $_SESSION['html'] = $html;
+            $_SESSION['percent'] = number_format((float)$percent, 2, '.', '');
+            echo "Congratulations! You have scored more than 60%!<br><br>";
+            echo "<form method='POST' action='mail.php'>
+                <input type='submit' value='Mail marksheet to parent' />
+            </form>";
         }
         ?></h2>
 </body>

@@ -12,6 +12,7 @@ if (isset($_SESSION['id'])) {
 </head>
 
 <body>
+    <a href="index.php">Home</a>
     <h2>Student Login</h2>
     <form method="POST">
         <label for="email">email</label>

@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (isset($_SESSION['id'])) {
+    if ($_SESSION['id'] == 'admin') {
+        header('Location: admin-dashboard.php');
+    } else {
+        header('Location: student-dashboard.php');
+    }
+}
+?>
+
 <html>
 
 <head>

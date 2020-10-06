@@ -1,7 +1,10 @@
 <?php
 session_start();
-if ($_SESSION['id'] == 'admin') {
-    header('Location: admin-dashboard.php');
+if (isset($_SESSION['id'])) {
+    if ($_SESSION['id'] == 'admin')
+        header('Location: admin-dashboard.php');
+    else
+        header('Location: student-dashboard.php');
 }
 ?>
 <html>
@@ -11,6 +14,7 @@ if ($_SESSION['id'] == 'admin') {
 </head>
 
 <body>
+    <a href="index.php">Home</a>
     <h2>Admin Login</h2>
     <form method="POST">
         <label for="email">email</label>
