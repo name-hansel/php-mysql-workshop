@@ -1,14 +1,15 @@
 <?php
 session_start();
-require('connect.php');
+if ($_SESSION['id'] != 'admin') {
+    header('Location: admin-login.php');
+}
+
 if (isset($_POST['logout'])) {
     unset($_SESSION['id']);
     session_destroy();
     header('Location: admin-login.php');
-} else if (!$_SESSION['id'] == 'admin') {
-    header('Location: admin-login.php');
 }
-
+require('connect.php');
 $stmt = "SELECT id,`name`,php,mysql,html FROM student WHERE NOT `name`='admin'";
 $result = $connect->query($stmt);
 ?>
